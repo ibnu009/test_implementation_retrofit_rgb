@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:test_implementation_codebase_flutter_rgb/base/network/dio_extension.dart';
@@ -24,6 +23,5 @@ Future<void> initServices() async {
     .addInterceptor(PlatformHeaderInterceptor())
     .addInterceptor(PrettyDioLoggerInterceptor()));
 
-    
   await Get.putAsync(() async => ProductServices(Get.find<Dio>()));
 }

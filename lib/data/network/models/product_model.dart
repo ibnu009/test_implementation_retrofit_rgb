@@ -2,7 +2,6 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'product_model.g.dart';
 
-//https://api.sampleapis.com/avatar/episodes
 @JsonSerializable()
 class Product {
   Product({
@@ -37,3 +36,5 @@ class Product {
       _$ProductFromJson(json);
   Map<String, dynamic> toJson() => _$ProductToJson(this);
 }
+
+class HewanAyam{}

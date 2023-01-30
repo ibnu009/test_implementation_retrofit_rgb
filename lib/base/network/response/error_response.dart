@@ -28,5 +28,4 @@ class ErrorItem {
 
   factory ErrorItem.fromJson(Map<String, dynamic> json) =>
       _$ErrorItemFromJson(json);
-
 }
