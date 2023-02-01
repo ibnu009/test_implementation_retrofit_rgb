@@ -16,47 +16,58 @@ extension LintStringExt on String {
   }
 
   bool isCorrectModelClassName() {
-    return !(contains("Service") ||
-        contains("Response") ||
-        contains("Request") ||
-        contains("Constant") ||
-        contains("Enum"));
+    RegExp regExp = RegExp(r"(Services|Response|Request|Constant|Enum)");
+    return !regExp.hasMatch(this);
+    // return !(contains("Service") ||
+    //     contains("Response") ||
+    //     contains("Request") ||
+    //     contains("Constant") ||
+    //     contains("Enum"));
   }
 
   bool isCorrectFileModelName() {
-    return (contains("_model"));
+    RegExp regExp = RegExp(r"_model.dart$");
+    return regExp.hasMatch(this);
   }
 
   bool isCorrectClassServiceName() {
-    return (contains("Service"));
+    RegExp regExp = RegExp(r".*Services.*");
+    return regExp.hasMatch(this);
   }
 
   bool isCorrectFileServiceName() {
-    return (contains("_services") || contains("_service"));
-  }
-
-  bool isCorrectFileResponseName() {
-    return (contains("_response"));
+    RegExp regExp = RegExp(r"_services.dart$");
+    return regExp.hasMatch(this);
   }
 
   bool isCorrectClassResponseName() {
-    return (contains("Response"));
+    RegExp regExp = RegExp(r".*Response.*");
+    return regExp.hasMatch(this);
   }
 
-  bool isCorrectFileRequestName() {
-    return (contains("_request"));
+  bool isCorrectFileResponseName() {
+    RegExp regExp = RegExp(r"_response.dart$");
+    return regExp.hasMatch(this);
   }
 
   bool isCorrectClassRequestName() {
-    return (contains("Request"));
+    RegExp regExp = RegExp(r".*Request.*");
+    return regExp.hasMatch(this);
+  }
+
+  bool isCorrectFileRequestName() {
+    RegExp regExp = RegExp(r"_request.dart$");
+    return regExp.hasMatch(this);
   }
 
   bool isCorrectClassEnumName() {
-    return (contains("Enum"));
+    RegExp regExp = RegExp(r".*Enum.*");
+    return regExp.hasMatch(this);
   }
 
   bool isCorrectFileEnumName() {
-    return (contains("_enum"));
+    RegExp regExp = RegExp(r"_enum.dart$");
+    return regExp.hasMatch(this);
   }
 
   String renameClass({required String type}) {
@@ -97,7 +108,7 @@ extension LintStringExt on String {
           '\n please change class name with correct name';
     }
 
-    if (contains('Enum')) {
+    if (contains('Enum')){
       message = 'Enum class name should only be declared in enum directory. '
           '\n please change class name with correct name';
     }
@@ -119,33 +130,33 @@ extension LintStringExt on String {
 
   String getWrongModelFileNameMessage() {
     String message =
-        'File name is incorrect. '
-        '\n please move to file to the correct directory or rename file with correct name';
+        'File name is incorrect.'
+        '\n please move file to the correct directory or rename file with correct name';
 
-    if (contains('_service')) {
+    if (this.isCorrectFileServiceName()) {
       message =
           'Service file name should only be created in services directory. '
           '\n please move to file to the correct directory or rename file with correct name';
     }
 
-    if (contains('_model')) {
+    if (this.isCorrectFileModelName()) {
       message =
-      'Model file name should only be created in services directory. '
+      'Model file name should only be created in model directory. '
           '\n please move to file to the correct directory or rename file with correct name';
     }
 
-    if (contains('_enum')) {
+    if (this.isCorrectFileEnumName()) {
       message = 'Enum file name should only be created in enum directory. '
           '\n please move to file to the correct directory or rename file with correct name';
     }
 
-    if (contains('_response')) {
+    if (this.isCorrectFileResponseName()) {
       message =
           'Response file name should only be created in response directory. '
           '\n please move to file to the correct directory or rename file with correct name';
     }
 
-    if (contains('_request')) {
+    if (this.isCorrectFileRequestName()) {
       message =
           'Request file name should only be created in request directory. '
           '\n please move to file to the correct directory or rename file with correct name';

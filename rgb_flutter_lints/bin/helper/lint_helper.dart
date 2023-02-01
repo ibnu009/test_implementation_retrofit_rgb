@@ -45,7 +45,9 @@ class LintHelper {
       ResolvedUnitResult unit, LintLocation? location, String fileName) {
     return Lint(
         code: 'incorrect_file_name',
-        message: 'Incorrect file name',
+        severity: LintSeverity.error,
+        message: 'Incorrect file name, it might seem that you have misplaced dart file to the incorrect directory. \n'
+            'or there is might a typo in the file name.',
         correction: fileName.getWrongModelFileNameMessage(),
         location: unit.getLintLocationByClassesLine(location));
   }

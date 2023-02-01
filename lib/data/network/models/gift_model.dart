@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
-@JsonSerializable()
-class GiftEnum{}
+class Gift{}
 
+class People{}
+
+class HewanLiar{}

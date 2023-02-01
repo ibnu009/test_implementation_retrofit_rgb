@@ -2,6 +2,7 @@ import 'dart:isolate';
 
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/error/listener.dart';
 import 'package:custom_lint_builder/custom_lint_builder.dart';
 
 import 'helper/library_element_extension.dart';
@@ -11,8 +12,11 @@ import 'helper/resolved_unit_extention.dart';
 import 'helper/string_extention.dart';
 
 main(List<String> args, SendPort sendPort) {
-  startPlugin(sendPort, _RgbCustomLint());
+  // startPlugin(sendPort, _RgbCustomLint());
+  createPlugin();
 }
+
+PluginBase createPlugin() => _RgbCustomLint();
 
 class _RgbCustomLint extends PluginBase {
   @override
@@ -20,7 +24,7 @@ class _RgbCustomLint extends PluginBase {
     ResolvedUnitResult unit,
   ) async* {
     final library = unit.libraryElement;
-    final path = library.source.fullName;
+    final path = library.source.uri.path;
     final shortName = library.source.shortName;
 
     if (isFileOrFolderExcluded(path)) {
@@ -29,7 +33,6 @@ class _RgbCustomLint extends PluginBase {
       final classesTotal = library.totalClasses;
 
       final LintHelper lintHelper = LintHelper();
-      print("Short name is $shortName");
 
       print("Path is $path");
       if (classesTotal > 1) {
@@ -42,6 +45,8 @@ class _RgbCustomLint extends PluginBase {
               location: unit.getLintLocationByClassesLine(location));
         }
       }
+
+      print("HEHEHE");
 
       //Check for model
       if (path.isPathModel()) {
@@ -139,4 +144,26 @@ class _RgbCustomLint extends PluginBase {
         path.contains("/util/") ||
         path.contains("/utility/"));
   }
+
+  @override
+  List<LintRule> getLintRules(CustomLintConfigs configs) {
+    throw UnimplementedError();
+  }
+}
+
+class RgbCustomLintCode extends DartLintRule {
+  RgbCustomLintCode() : super(code: _code);
+
+  static const _code = LintCode(
+    name: 'my_custom_lint_code',
+    problemMessage: 'This is the description of our custom lint',
+  );
+
+
+
+  @override
+  void run(CustomLintResolver resolver, ErrorReporter reporter, CustomLintContext context) {
+
+  }
+
 }

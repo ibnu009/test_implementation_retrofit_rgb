@@ -44,7 +44,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   intl:
   flutter_html: ^2.2.1
-  custom_lint: ^0.0.8
+  custom_lint: ^0.2.2
 
   recycler:
     git:
